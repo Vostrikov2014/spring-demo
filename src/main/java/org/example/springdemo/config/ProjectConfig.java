@@ -17,7 +17,7 @@ public class ProjectConfig {
     SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(
-                c -> c.anyRequest().authenticated() //permitAll() //authenticated()
+                c -> c.anyRequest().authenticated()
         );
 
         return http.build();
