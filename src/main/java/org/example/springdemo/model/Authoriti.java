@@ -9,12 +9,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "users")
-public class User {
+@Table(name = "Authorities")
+public class Authoriti {
 
     @Id
     private int id;
     private String username;
-    private String password;
-    private boolean enabled;
+    private String authority;
 }

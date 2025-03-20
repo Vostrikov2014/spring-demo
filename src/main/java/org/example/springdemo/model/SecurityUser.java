@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class SecurityUser implements UserDetails {
+public class SecurityUser { //implements UserDetails {
 
-    private final User user;
+    /*private final User user;
 
     @Override
     public String getUsername() {
@@ -45,5 +45,5 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
+    }*/
 }
