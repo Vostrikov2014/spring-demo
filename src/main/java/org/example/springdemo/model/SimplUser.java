@@ -11,10 +11,11 @@ import java.util.List;
 public class SimplUser implements UserDetails {
     private final String username;
     private final String password;
+    private final String authority;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "READ");
+        return List.of(() -> authority);
     }
 
     @Override
