@@ -1,34 +1,57 @@
 package org.example.springdemo.config;
 
+import lombok.RequiredArgsConstructor;
+import org.example.springdemo.security.AuthenticationLoggingFilter;
+import org.example.springdemo.security.RequestValidationFilter;
+import org.example.springdemo.security.StaticKeyAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class ProjectConfig {
 
+    private final StaticKeyAuthenticationFilter filter;
+
+    public ProjectConfig(StaticKeyAuthenticationFilter filter) {
+        this.filter = filter;
+    }
+
     @Bean
-    SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.httpBasic(Customizer.withDefaults());
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        /*http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(
                 c -> c.anyRequest().authenticated()
-        );
+        );*/
+
+        // Настройка пользовательского фильтра авторизации
+        // добавление фильтра перед существующим фильтром в цепочке (BasicAuthenticationFilter)
+        /*http.addFilterBefore(
+                        new RequestValidationFilter(),
+                        BasicAuthenticationFilter.class)
+                .addFilterAfter(
+                        new AuthenticationLoggingFilter(),
+                        BasicAuthenticationFilter.class)
+                .authorizeHttpRequests(c -> c.anyRequest().permitAll());*/
+
+        // Заменить встроенный фильтр BasicAuthenticationFilter, кастомным фильтром
+        http.addFilterAt(filter, BasicAuthenticationFilter.class)
+                .authorizeHttpRequests(c -> c.anyRequest().permitAll());
 
         return http.build();
     }
 
-    // Переопределяем UserDetailsService, который используется по умолчанию в Spring Security
-    // @Bean предписывает Spring добавить экземпляр, возвращаемый методом, в контекст Spring
+// Переопределяем UserDetailsService, который используется по умолчанию в Spring Security
+// @Bean предписывает Spring добавить экземпляр, возвращаемый методом, в контекст Spring
     /*@Bean
     UserDetailsService userDetailsService() {
         // Создаем пользователя с заданным именем пользователя, паролем и списком полномочий.
@@ -39,6 +62,7 @@ public class ProjectConfig {
                 .build();
         return new InMemoryUserDetailsManager(user);
     }*/
+
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
         // По умолчанию используются
