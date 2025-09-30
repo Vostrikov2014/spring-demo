@@ -50,5 +50,30 @@ public class HelloController {
     public int calculate33() {
         return 3 + 3;
     }
+
+// ... existing code ...
+
+    /**
+     * Returns the result of adding 4 + 4.
+     *
+     * @return The result of 4 + 4 calculation.
+     */
+    @GetMapping("/calculate44")
+    public int calculate44() {
+        return 4 + 4;
+    }
+
+    /**
+     * Returns the result of adding 5 + 5.
+     *
+     * @return The result of 5 + 5 calculation.
+     */
+    @GetMapping("/calculate55")
+    public int calculate55() {
+        return 5 + 5;
+    }
+
 }
+
+
 
