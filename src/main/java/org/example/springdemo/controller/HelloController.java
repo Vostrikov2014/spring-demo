@@ -51,8 +51,6 @@ public class HelloController {
         return 3 + 3;
     }
 
-// ... existing code ...
-
     /**
      * Returns the result of adding 4 + 4.
      *
@@ -71,6 +69,16 @@ public class HelloController {
     @GetMapping("/calculate55")
     public int calculate55() {
         return 5 + 5;
+    }
+
+    /**
+     * Returns the result of adding 6 + 6.
+     *
+     * @return The result of 6 + 6 calculation.
+     */
+    @GetMapping("/calculate66")
+    public int calculate66() {
+        return 6 + 6;
     }
 
 }
