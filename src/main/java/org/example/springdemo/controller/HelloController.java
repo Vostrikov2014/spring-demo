@@ -30,5 +30,15 @@ public class HelloController {
     public int getLength(@RequestParam String text) {
         return text.length();
     }
+
+    /**
+     * Returns the result of adding 2 + 2.
+     *
+     * @return The result of 2 + 2 calculation.
+     */
+    @GetMapping("/calculate")
+    public int calculate() {
+        return 2 + 2;
     }
+}
 
